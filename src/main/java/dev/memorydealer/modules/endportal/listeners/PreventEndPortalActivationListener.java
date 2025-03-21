@@ -1,4 +1,4 @@
-package dev.memorydealer.listeners;
+package dev.memorydealer.modules.endportal.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -44,14 +44,12 @@ public class PreventEndPortalActivationListener implements Listener {
             BlockFace facing = ((Dispenser) event.getBlock().getBlockData()).getFacing();
             Material target = event.getBlock().getRelative(facing).getType();
 
-            if (target == Material.END_PORTAL_FRAME) {
-                if (LocalDateTime.now().isBefore(endAllowedTime)) {
-                    event.setCancelled(true);
-                    event.getBlock().getWorld().getPlayers().stream()
-                            .filter(p -> p.getLocation().distance(event.getBlock().getLocation()) < 8)
-                            .forEach(p -> p.sendMessage("§cEnd Portal activation (via dispenser) is disabled until §e"
-                                    + endAllowedTime.format(formatter) + "§c!"));
-                }
+            if (target == Material.END_PORTAL_FRAME && LocalDateTime.now().isBefore(endAllowedTime)) {
+                event.setCancelled(true);
+                event.getBlock().getWorld().getPlayers().stream()
+                        .filter(p -> p.getLocation().distance(event.getBlock().getLocation()) < 8)
+                        .forEach(p -> p.sendMessage("§c🇲🇹 [Maltese Network SMP Scheduler AI] End Portal activation (via dispenser) is disabled until §e"
+                                + endAllowedTime.format(formatter) + "§c!"));
             }
         }
     }

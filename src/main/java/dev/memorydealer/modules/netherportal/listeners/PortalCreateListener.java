@@ -1,4 +1,4 @@
-package dev.memorydealer.listeners;
+package dev.memorydealer.modules.netherportal.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,14 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class NetherPortalCreateListener implements Listener {
+public class PortalCreateListener implements Listener {
 
     private final LocalDateTime netherAllowedTime;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
     private final Map<UUID, Long> recentPortalAttempt = new HashMap<>();
 
-    public NetherPortalCreateListener(LocalDateTime netherAllowedTime) {
+    public PortalCreateListener(LocalDateTime netherAllowedTime) {
         this.netherAllowedTime = netherAllowedTime;
     }
 
@@ -45,11 +44,10 @@ public class NetherPortalCreateListener implements Listener {
             if (LocalDateTime.now().isBefore(netherAllowedTime)) {
                 event.setCancelled(true);
 
-                // Identify the closest recently interacting player (within ~3 seconds)
                 long currentTime = System.currentTimeMillis();
                 for (Player player : event.getWorld().getPlayers()) {
                     Long interactTime = recentPortalAttempt.get(player.getUniqueId());
-                    if (interactTime != null && (currentTime - interactTime) < 3000) { // within last 3 sec
+                    if (interactTime != null && (currentTime - interactTime) < 3000) {
                         player.sendMessage("§c🇲🇹 [Maltese Network SMP Scheduler AI] Nether portals are disabled until §e"
                                 + netherAllowedTime.format(formatter) + "§c!");
                         recentPortalAttempt.remove(player.getUniqueId());
