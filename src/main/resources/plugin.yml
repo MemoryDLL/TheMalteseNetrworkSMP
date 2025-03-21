@@ -1,0 +1,4 @@
+name: TheMalteseNetrworkSMP
+version: '1.0-SNAPSHOT'
+main: dev.memorydealer.TheMalteseNetrworkSMP
+api-version: '1.21'
