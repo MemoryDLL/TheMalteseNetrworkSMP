@@ -2,6 +2,7 @@ package dev.memorydealer;
 
 import dev.memorydealer.listeners.NetherPortalCreateListener;
 import dev.memorydealer.listeners.PreventEndPortalActivationListener;
+import dev.memorydealer.modules.chillzone.ChillZoneModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,10 @@ public final class TheMalteseNetrworkSMP extends JavaPlugin {
     // Times when Nether and End portals become allowed
     private LocalDateTime netherAllowedTime;
     private LocalDateTime endAllowedTime;
+
+    //modules
+
+    private ChillZoneModule chillZoneModule;
 
     @Override
     public void onEnable() {
@@ -34,12 +39,20 @@ public final class TheMalteseNetrworkSMP extends JavaPlugin {
                 this
         );
 
-        getLogger().info("NoPortalsPlugin enabled! Using a fixed start time of "
-                + fixedDate + ", Nether portals open in 1 week, End in 1 month.");
+        //start modules
+        chillZoneModule = new ChillZoneModule(this);
+        chillZoneModule.start();
+
+        getLogger().info("TheMalteseNetworkSMP plugin by MemoryDLL is enabled!");
+
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("NoPortalsPlugin disabled!");
+        if (chillZoneModule != null) {
+            chillZoneModule.stop();
+        }
+
+        getLogger().info("TheMalteseNetworkSMP plugin by MemoryDLL is disabled!");
     }
 }
