@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class NetherPortalModule {
 
     private final Plugin plugin;
-    private LocalDateTime netherAllowedTime;
 
     public NetherPortalModule(Plugin plugin) {
         this.plugin = plugin;
@@ -17,7 +16,7 @@ public class NetherPortalModule {
 
     public void start() {
         LocalDateTime baseline = LocalDateTime.of(2025, 3, 28, 0, 0);
-        netherAllowedTime = baseline.plusWeeks(1); // Opens 04 April 2025
+        LocalDateTime netherAllowedTime = baseline.plusWeeks(1); // Opens 04 April 2025
 
         Bukkit.getPluginManager().registerEvents(new PortalCreateListener(netherAllowedTime), plugin);
     }

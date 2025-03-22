@@ -32,7 +32,7 @@ public class ChillZoneModule {
 
             String message = LocalDateTime.now().isBefore(chillEndDate)
                     ? ChatColor.GREEN + "☮ Chill Zone ends in " + ChatColor.YELLOW + daysLeft + "d " + hoursLeft + "h"
-                    : ChatColor.RED + "⚔ PvP is now ENABLED!";
+                    : "";
 
             Bukkit.getOnlinePlayers().forEach(player ->
                     player.sendActionBar(message)
